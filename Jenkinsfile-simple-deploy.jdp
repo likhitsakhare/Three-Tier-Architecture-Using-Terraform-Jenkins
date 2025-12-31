@@ -22,14 +22,19 @@ pipeline {
 
             }
 
-              stage ('docker push build FE') {
+            stage ('docker push') {
                 steps {
-                    sh '''
-                    docker push sakhare1181/easy-frontend:latest 
-                    docker push sakhare1181/easy-backend:latest 
-                    '''
+                    withCredentials([usernamePassword(
+                        credentialsId: 'docker_hub_token', 
+                        passwordVariable: 'docker_hub_password', 
+                        usernameVariable: 'docker_hub_username')]) {
+                        sh '''
+                        docker push sakhare1181/easy-frontend:latest 
+                        docker push sakhare1181/easy-backend:latest 
+                        '''
+                    }
                 }
-              }
+            }
 
             stage ('kubectl apply') {
                 steps {
