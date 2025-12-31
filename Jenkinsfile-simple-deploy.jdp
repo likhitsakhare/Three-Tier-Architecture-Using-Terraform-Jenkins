@@ -17,8 +17,20 @@ pipeline {
                 steps {
                     sh '''cd frontend
                     docker build -t sakhare1181/easy-frontend:latest .'''
+
                 }
+
             }
+
+              stage ('docker push build FE') {
+                steps {
+                    sh '''
+                    docker push sakhare1181/easy-frontend:latest 
+                    docker push sakhare1181/easy-backend:latest 
+                    '''
+                }
+              }
+
             stage ('kubectl apply') {
                 steps {
                     sh '''cd simple-deploy
