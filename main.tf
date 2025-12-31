@@ -131,12 +131,12 @@ resource "aws_eks_node_group" "tf_node_group" {
 }
 
 resource "aws_eks_access_entry" "admin" {
-  cluster_name  = aws_eks_cluster.eks.name
+  cluster_name  = aws_eks_cluster.tf_eks_cluster.name
   principal_arn = data.aws_caller_identity.current.arn
 }
 
 resource "aws_eks_access_policy_association" "admin_policy" {
-  cluster_name  = aws_eks_cluster.eks.name
+  cluster_name  = aws_eks_cluster.tf_eks_cluster.name
   principal_arn = data.aws_caller_identity.current.arn
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 
