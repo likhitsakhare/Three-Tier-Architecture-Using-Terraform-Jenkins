@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+        stages {
+            stage ('Pull Code') {
+                steps {
+                    git branch: 'devops',
+                    url: 'https://github.com/likhitsakhare/Easy_Crud.git'
+                }
+            }
+            stage ('docker image build BE') {
+                steps {
+                    sh '''cd backend
+                    docker build -t sakhare1181/easy-backend:latest .'''
+                }
+            }
+            stage ('docker image build FE') {
+                steps {
+                    sh '''cd frontend
+                    docker build -t sakhare1181/easy-frontend:latest .'''
+                }
+            }
+            stage ('kubectl apply') {
+                steps {
+                    sh '''cd simple-deploy
+                    kubectl apply -f .'''
+                }
+            }
+        }
+}
