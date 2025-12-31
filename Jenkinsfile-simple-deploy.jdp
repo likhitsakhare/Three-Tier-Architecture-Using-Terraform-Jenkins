@@ -29,6 +29,7 @@ pipeline {
                         passwordVariable: 'docker_hub_password', 
                         usernameVariable: 'docker_hub_username')]) {
                         sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                         docker push sakhare1181/easy-frontend:latest 
                         docker push sakhare1181/easy-backend:latest 
                         '''
