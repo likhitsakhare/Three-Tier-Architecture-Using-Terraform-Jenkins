@@ -3,15 +3,40 @@ pipeline {
 
         environment {
             AWS_ACCESS_KEY_ID = credentials('likhit-access-key')
-            AWS_SECRET_KEY_ID = credentials('likhit-secret-key')
+            AWS_SECRET_ACCESS_KEY = credentials('likhit-secret-key')
             AWS_DEFAULT_REGION = 'eu-north-1'
         }
 
         stages {
             stage ('Pull code') {
                 steps {
-
+                    git branch: 'master',
+                    url: 'https://github.com/likhitsakhare/Three-Tier-Architecture-Using-Terraform-Jenkins.git'
+                }
+            }
+            stage ('terraform init') {
+                steps {
+                    sh 'terraform init'
+                }
+            }
+            stage ('terraform plan') {
+                steps {
+                    sh 'terraform plan'
+                }
+            }
+            stage ('terraform apply') {
+                steps {
+                    input message: "Do you want to create EKS cluster?"
+                    sh 'terraform apply --auto-approve'
                 }
             }
         }
 }
+
+//Destroy stage
+/* stage ('terraform destroy') {
+                steps {
+                    input message: "Do you want to destroy EKS cluster?"
+                    sh 'terraform destroy --auto-approve'
+                }
+            } */
