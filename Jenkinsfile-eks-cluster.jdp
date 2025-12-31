@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+        environment {
+            AWS_ACCESS_KEY_ID = credentials('likhit-access-key')
+            AWS_SECRET_KEY_ID = credentials('likhit-secret-key')
+            AWS_DEFAULT_REGION = 'eu-north-1'
+        }
+
+        stages {
+            stage ('Pull code') {
+                steps {
+
+                }
+            }
+        }
+}
