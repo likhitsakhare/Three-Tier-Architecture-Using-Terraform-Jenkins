@@ -15,7 +15,7 @@ data "aws_subnets" "default_subnets" {
     }
 }
 
-data "aws_caller_identity" "current" {}
+# data "aws_caller_identity" "current" {}
 
 #Role and policy attachment
 resource "aws_iam_role" "tf_eks_cluster_role" {
@@ -132,12 +132,12 @@ resource "aws_eks_node_group" "tf_node_group" {
 
 resource "aws_eks_access_entry" "admin" {
   cluster_name  = aws_eks_cluster.tf_eks_cluster.name
-  principal_arn = data.aws_caller_identity.current.arn
+  principal_arn = "arn:aws:iam::859616339090:user/likhit"
 }
 
 resource "aws_eks_access_policy_association" "admin_policy" {
   cluster_name  = aws_eks_cluster.tf_eks_cluster.name
-  principal_arn = data.aws_caller_identity.current.arn
+  principal_arn = "arn:aws:iam::859616339090:user/likhit"
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 
   access_scope {
